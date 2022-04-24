@@ -7,8 +7,8 @@ from model.users import *
 router = APIRouter()
 
 @router.get("/", response_description="Users retrieved")
-async def get_users():
-    users = await retrieve_users()
+def get_users():
+    users = retrieve_users()
     return ResponseModel(users, "Users data retrieved successfully") \
         if len(users) > 0 \
         else ResponseModel(
@@ -24,9 +24,9 @@ async def get_user_data(id):
 
 
 @router.post("/", response_description="User data added into the database")
-async def add_user_data(user: UserModel = Body(...)):
+def add_user_data(user: UserModel = Body(...)):
     user = jsonable_encoder(user)
-    new_user = await add_user(user)
+    new_user = add_user(user)
     return ResponseModel(new_user, "User added successfully.")
 
 

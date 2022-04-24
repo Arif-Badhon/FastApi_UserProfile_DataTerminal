@@ -39,7 +39,7 @@ class UpdateUserModel(BaseModel):
         }
 
 
-def ResponseModel(data, message):
+def ResponseModel(data, message="Added Succesfully"):
     return {
         "data": [
             data
@@ -49,7 +49,7 @@ def ResponseModel(data, message):
     }
 
 
-def ErrorResponseModel(error, code, message):
+def ErrorResponseModel(error, code, message="Error adding user"):
     return {
         "error": error,
         "code": code,

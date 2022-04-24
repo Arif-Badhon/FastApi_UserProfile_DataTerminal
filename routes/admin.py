@@ -13,9 +13,9 @@ router = APIRouter()
 hash_helper = CryptContext(schemes=["bcrypt"])
 
 @router.post("/login")
-async def admin_login(admin_credentials: HTTPBasicCredentials = Body(...)):
+def admin_login(admin_credentials: HTTPBasicCredentials = Body(...)):
     # NEW CODE
-    admin_user = await admin_collection.find_one({"email": admin_credentials.username}, {"_id": 0})
+    admin_user = admin_collection.find_one({"email": admin_credentials.username}, {"_id": 0})
     if (admin_user):
         password = hash_helper.verify(
             admin_credentials.password, admin_user["password"])
@@ -27,11 +27,11 @@ async def admin_login(admin_credentials: HTTPBasicCredentials = Body(...)):
     return "Incorrect email or password"
 
 @router.post("/")
-async def admin_signup(admin: AdminModel = Body(...)):  
-    admin_exists = await admin_collection.find_one({"email":  admin.email}, {"_id": 0})
+def admin_signup(admin: AdminModel = Body(...)):  
+    admin_exists = admin_collection.find_one({"email":  admin.email}, {"_id": 0})
     if(admin_exists):
-        return "Email already exists"
+        return {"res":"created"}
     
     admin.password = hash_helper.encrypt(admin.password)
-    new_admin = await add_admin(jsonable_encoder(admin))
+    new_admin = add_admin(jsonable_encoder(admin))
     return new_admin

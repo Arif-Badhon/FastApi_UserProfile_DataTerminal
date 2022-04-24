@@ -11,22 +11,22 @@ db = client["DATATERMINAL_USER"]
 user_collection = db.get_collection('user')
 admin_collection = db.get_collection('admin')
 
-async def add_admin(admin_data: dict) -> dict:
-    admin = await admin_collection.insert_one(admin_data)
-    new_admin = await admin_collection.find_one({"_id": admin.inserted_id})
+def add_admin(admin_data: dict) -> dict:
+    admin = admin_collection.insert_one(admin_data)
+    new_admin = admin_collection.find_one({"_id": admin.inserted_id})
     return admin_helper(new_admin)
 
 
-async def retrieve_users():
+def retrieve_users():
     users = []
-    async for user in user_collection.find():
+    for user in user_collection.find():
         users.append(user_helper(user))
     return users
 
 
-async def add_user(user_data: dict) -> dict:
-    user = await user_collection.insert_one(user_data)
-    new_user = await user_collection.find_one({"_id": user.inserted_id})
+def add_user(user_data: dict) -> dict:
+    user = user_collection.insert_one(user_data)
+    new_user = user_collection.find_one({"_id": user.inserted_id})
     return user_helper(new_user)
 
 
