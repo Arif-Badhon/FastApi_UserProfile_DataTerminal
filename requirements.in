@@ -1,3 +1,8 @@
 uvicorn
 fastapi
 pymongo
+python-decouple
+PyJWT
+bcrypt
+pydantic[email]
+passlib
